@@ -1,47 +1,58 @@
 import customtkinter as ctk
-from CTkMenuBar import * 
+from CTkMenuBar import *
+import tkinter as tk
 
-class MenuBar(CTkMenuBar): 
+
+class MenuBar(tk.Menu): 
     def __init__(self, master): 
         super().__init__(master)
-
-        self.add_cascade(text="File")
-        self.add_cascade(text="Edit")
-        self.add_cascade(text="Draw")
-        self.option_add(option="Draw", text= "Draw_submenu")
         
-                                             
-        self.add_cascade(text="Scope")
-       
-        
+        self.components_menu = tk.Menu(self,tearoff = False) 
+        self.components_menu.add_cascade(label="Resistor")
+        self.components_menu.add_cascade(label="Wire")
+        self.components_menu.add_cascade(label="Battery")
+        self.components_menu.add_cascade(label="Capacitor")
+        self.components_menu.add_cascade(label="LED")
+
+        self.file_menu = tk.Menu(self,tearoff=False)
+        self.file_menu.add_cascade(label="Save As")  
+        self.file_menu.add_cascade(label="Save")
+        self.file_menu.add_cascade(label="Load") 
 
 
-class Canvas(ctk.CTkCanvas): 
+        self.add_cascade(label="File",menu=self.file_menu)
+        self.add_cascade(label="Edit",font=("comic sans",5))
+        self.add_cascade(label="Components",menu=self.components_menu)     
+        self.add_cascade(label="Scope")
+          
+
+
+class Canvas(tk.Canvas): 
     def __init(self,master): 
         super.__init__(master,fg_color="white") 
 
 
-
-class App(ctk.CTk): 
+class App(tk.Tk): 
     def __init__(self): 
         super().__init__()
 
         self.title("Circuit simulator")
         self.geometry("800x600")
-        self.button_frame = MenuBar(master=self)
-        self.button_frame.pack(fill='x')
+        self.menu_bar = MenuBar(master=self)
+        self.config(menu=self.menu_bar)
+        
         self.Canvas = Canvas(master=self)
         self.Canvas.pack(expand=True,fill="both") 
-        self.mouse_position = [0,self.button_frame.winfo_height()]
-    
+        self.mouse_position = [0,self.menu_bar.winfo_height()]
+        
+
     def locate_mouse(self,event): 
         self.mouse_position = [event.x,event.y]
-        if event.y>self.button_frame.winfo_height():
+        if event.y>self.menu_bar.winfo_height():
             print(self.mouse_position)
-    
 
 app = App() 
-
+app.option_add("*Menu.Font", "utopia 205")
 app.bind('<Motion>',app.locate_mouse)
 app.mainloop() 
 
