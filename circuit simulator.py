@@ -1,5 +1,3 @@
-import customtkinter as ctk
-from CTkMenuBar import *
 import tkinter as tk
 
 class App(tk.Tk): 
