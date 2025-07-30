@@ -23,6 +23,7 @@ class EventHandler():
         master.canvas.bind('<ButtonRelease-1>',lambda event, master=master: self.Button1_release_handler(event,master))
 
     def Motion_handler(self,event,master):
+        
         if self.locate_mouse: 
             master.mouse_position = [(round(event.x/50))*50,(round(event.y/50))*50]
             print(master.mouse_position)
@@ -32,7 +33,7 @@ class EventHandler():
             self.current_component.move_line(master,self.current_component.start_pos,self.current_component.end_pos)
 
     def Button1_handler(self,event,master): 
-
+        print("Button 1 pressed")
         if self.start_drawing:
              
              self.current_component.start_pos = [master.mouse_position[0],master.mouse_position[1]]
@@ -43,20 +44,23 @@ class EventHandler():
              self.stop_drawing = True 
              
     def Button1_release_handler(self,event,master): 
+        print("button 1 released")
         if self.stop_drawing: 
             master.components.append(self.current_component)
-            self.current_component = None 
             self.move_line = False
             self.stop_drawing = False 
-            self.start_drawing = False 
+            self.start_drawing = False
+
+            self.select_component(self.current_component.__class__.__name__,master)
+
+            
+             
     
     def select_component(self,component,master): 
         component_dict = {"Wire":Wire(master)}#,"Resistor", }
         self.current_component = component_dict[component]
         self.start_drawing = True
          
-
-            
 
 
 class App(tk.Tk): 
@@ -106,5 +110,6 @@ class App(tk.Tk):
         pass    
         
 app = App() 
+
 app.mainloop() 
 #pastakudasai

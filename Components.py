@@ -3,6 +3,7 @@ import tkinter as tk
 
 class Wire(): 
     def __init__(self,master):
+
         self.start_pos = None 
         self.end_pos = None
         self.geometry = [] 
