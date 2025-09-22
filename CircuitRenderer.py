@@ -1,3 +1,4 @@
+import GeometryMath
 import tkinter as tk
 import math 
 import numpy 
@@ -8,6 +9,12 @@ import GeometryMath
 #tools to draw any basic shape with two leads sticking out of it 
 #tools to move that box 
 #tools to create a collision box 
+
+
+class Renderer(): 
+    def __init__(self,master): 
+        self.component_list = [[]]
+
 
 class Component(): 
     def __init__(self,master): 
@@ -250,5 +257,4 @@ class Resistor(Wire):
          self.top_left = [mid_left[0] + scaled_norm_px, mid_left[1] + scaled_norm_py]
          self.bottom_left = [mid_left[0] - scaled_norm_px, mid_left[1] - scaled_norm_py]
 
-
-  
+#one main class with methods that draw each component

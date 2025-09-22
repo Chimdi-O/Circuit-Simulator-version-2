@@ -1,5 +1,7 @@
 import tkinter as tk
 from Components import *
+import GeometryMath
+import CircuitMath
 
 #save save save!!!! current
 
@@ -11,7 +13,6 @@ class EventHandler():
 
         #Button1 
         self.start_drawing = False 
-
         #Button1 release 
         self.stop_drawing = False 
 
@@ -21,7 +22,8 @@ class EventHandler():
         master.canvas.bind('<Motion>',lambda event, master=master: self.Motion_handler(event,master))
         master.canvas.bind('<Button-1>', lambda event, master=master: self.Button1_handler(event,master))
         master.canvas.bind('<ButtonRelease-1>',lambda event, master=master: self.Button1_release_handler(event,master))
-        master.canvas.bind('<Escape>',lambda event, master: self.Escape_handler(event,master))
+        master.canvas.bind('<Escape>',lambda event, master=master: self.Escape_handler(event,master))
+        
 
     def Motion_handler(self,event,master):
         
@@ -57,9 +59,10 @@ class EventHandler():
             self.select_component(self.current_component.__class__.__name__,master)
 
     def Escape_handler(self,event,master): 
+        print("escape was pressed ")
         if self.start_drawing == True: 
             self.move_line = False
-            self.stop_drawing = False 
+            self.stop_drawing = False
             self.start_drawing = False
             master.config(cursor="arrow")
 
@@ -111,9 +114,7 @@ class App(tk.Tk):
     def create_canvas(self): 
         self.canvas = tk.Canvas(self)
         self.canvas.pack(fill="both",expand=1)  
-
-    def update(self): 
-        pass    
+        
         
 app = App() 
 
